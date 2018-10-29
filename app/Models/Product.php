@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Image;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,5 +19,10 @@ class Product extends Model
     public function scopePublished($query)
     {
         return $query->where('price', '>', 0);
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
     }
 }

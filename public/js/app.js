@@ -47509,7 +47509,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.add();
         },
         fileUploaded: function fileUploaded(file, response) {
-            this.image_id = response.id;
+            this.form.image_id = response;
         }
     },
     mounted: function mounted() {

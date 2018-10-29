@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Webapi\Admin;
 
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $newProduct = Product::create($request->all());
+
+        $newProduct->image()->save(Image::find($request->image_id));
 
         return new ProductResource($newProduct);
     }

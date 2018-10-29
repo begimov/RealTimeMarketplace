@@ -12,11 +12,13 @@ class FileController extends Controller
 {
     public function store(Request $request)
     {
-        Image::create([
+        $file = Image::create([
             'name' => pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME)
         ]);
         
         $this->storeFileOnDisk('public', 'files', $request->file);
+
+        return $file->id;
     }
 
     protected function storeFileOnDisk($disk, $path, $file)

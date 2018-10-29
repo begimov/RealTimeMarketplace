@@ -150,7 +150,7 @@
                 this.add()
             },
             fileUploaded(file, response) {
-                this.image_id = response.id
+                this.form.image_id = response
             }
         },
         mounted() {
