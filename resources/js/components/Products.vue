@@ -32,6 +32,16 @@
                 </tbody>
             </table>
             <form action="" class="m-3" @submit.prevent="save" v-else>
+                <div class="row mb-3">
+                    <div class="col">
+                        <vue-dropzone 
+                            ref="fileUploader" 
+                            id="fileUploader"
+                            :options="dropzoneOptions"
+                            :destroyDropzone="false"
+                            @vdropzone-success="fileUploaded" />
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
@@ -62,20 +72,37 @@
 </template>
 
 <script>
+    import vue2Dropzone from 'vue2-dropzone'
+    import 'vue2-dropzone/dist/vue2Dropzone.css'
+
     export default {
+        components: {
+            vueDropzone: vue2Dropzone
+        },
         data() {
             return {
                 products: [],
                 newProduct: false,
                 form: {
                     name: '',
-                    category_id: null
+                    category_id: null,
+                    image_id: null
                 },
                 options: {
                     categories: []
                 },
                 errors: {},
-                isLoading: false
+                isLoading: false,
+                dropzoneOptions: {
+                    url: `/webapi/files`,
+                    thumbnailWidth: 150,
+                    timeout: 0,
+                    maxFilesize: 100,
+                    maxFiles: 1,
+                    headers: {
+                        'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                }
             }
         },
         methods: {
@@ -118,6 +145,9 @@
             },
             cancel() {
                 this.add()
+            },
+            fileUploaded(file, response) {
+                this.image_id = response.id
             }
         },
         mounted() {
