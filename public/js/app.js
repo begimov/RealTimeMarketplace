@@ -47449,6 +47449,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             dropzoneOptions: {
                 url: '/webapi/files',
                 thumbnailWidth: 150,
+                resizeWidth: 400,
+                resizeHeight: 200,
+                resizeMethod: 'crop',
                 timeout: 0,
                 maxFilesize: 100,
                 maxFiles: 1,

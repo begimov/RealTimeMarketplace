@@ -96,6 +96,9 @@
                 dropzoneOptions: {
                     url: `/webapi/files`,
                     thumbnailWidth: 150,
+                    resizeWidth: 400,
+                    resizeHeight: 200,
+                    resizeMethod: 'crop',
                     timeout: 0,
                     maxFilesize: 100,
                     maxFiles: 1,
