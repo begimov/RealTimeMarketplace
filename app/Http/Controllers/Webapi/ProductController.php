@@ -27,4 +27,11 @@ class ProductController extends Controller
 
         return new ProductResource($newProduct);
     }
+
+    public function update(StoreProductRequest $request, Product $product)
+    {
+        $payload = $request->only(['category_id', 'name', 'price']);
+
+        $product->update($payload);
+    }
 }

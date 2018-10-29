@@ -47444,8 +47444,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 console.log(err.response.data);
             });
         },
-        publish: function publish() {
-            console.log('OK');
+        publish: function publish(id) {
+            var product = _.find(this.products, ['id', id]);
+
+            product.category_id = product.category.id;
+
+            axios.patch('webapi/products/' + id, _extends({}, product)).then(function (res) {
+                //
+            }).catch(function (err) {
+                console.log(err.response.data);
+            });
         }
     },
     mounted: function mounted() {
@@ -47509,7 +47517,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return _vm.publish($event)
+                            _vm.publish(product.id)
                           }
                         }
                       },
@@ -47525,7 +47533,10 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "text" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "Введите цену..."
+                            },
                             domProps: { value: product.price },
                             on: {
                               input: function($event) {

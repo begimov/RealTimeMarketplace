@@ -20,9 +20,9 @@
                         <td>{{ product.name }}</td>
                         <td>{{ product.category.name }}</td>
                         <td>
-                            <form class="form-inline" action="" @submit.prevent="publish">
+                            <form class="form-inline" action="" @submit.prevent="publish(product.id)">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" v-model="product.price">
+                                    <input type="text" class="form-control" v-model="product.price" placeholder="Введите цену...">
                                 </div>
                                 <button type="submit" class="btn btn-success ml-1">></button>
                             </form>
@@ -92,8 +92,16 @@
                 })
                 
             },
-            publish() {
-                console.log('OK')
+            publish(id) {
+                const product = _.find(this.products, ['id', id])
+                
+                product.category_id = product.category.id
+
+                axios.patch(`webapi/products/${id}`, {...product}).then(res => {
+                    //
+                }).catch(err => {
+                    console.log(err.response.data)
+                })
             }
         },
         mounted() {
