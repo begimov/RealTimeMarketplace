@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Webapi;
 
-use App\Product;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,6 +23,8 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        dd('OK');
+        $newProduct = Product::create($request->all());
+
+        return new ProductResource($newProduct);
     }
 }

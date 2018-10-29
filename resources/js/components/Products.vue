@@ -30,7 +30,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="category">Категория</label>
-                            <select id="category" v-model="form.category" class="form-control">
+                            <select id="category" v-model="form.category_id" class="form-control">
                                 <option>Выберите категорию</option>
                                 <option :value="category.id" v-for="category in options.categories" :key="category.id">{{ category.name }}</option>
                             </select>
@@ -55,7 +55,7 @@
                 newProduct: false,
                 form: {
                     name: '',
-                    category: null
+                    category_id: null
                 },
                 options: {
                     categories: []
@@ -73,8 +73,7 @@
                 this.newProduct = !this.newProduct
             },
             save() {
-                axios.post('webapi/products').then(res => {
-                    console.log(res)
+                axios.post('webapi/products', {...this.form}).then(res => {
                     this.add()
                 }).catch(err => {
                     console.log(err.response.data)

@@ -47342,6 +47342,8 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -47399,7 +47401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             newProduct: false,
             form: {
                 name: '',
-                category: null
+                category_id: null
             },
             options: {
                 categories: []
@@ -47422,8 +47424,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var _this2 = this;
 
-            axios.post('webapi/products').then(function (res) {
-                console.log(res);
+            axios.post('webapi/products', _extends({}, this.form)).then(function (res) {
                 _this2.add();
             }).catch(function (err) {
                 console.log(err.response.data);
@@ -47544,8 +47545,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.category,
-                            expression: "form.category"
+                            value: _vm.form.category_id,
+                            expression: "form.category_id"
                           }
                         ],
                         staticClass: "form-control",
@@ -47562,7 +47563,7 @@ var render = function() {
                               })
                             _vm.$set(
                               _vm.form,
-                              "category",
+                              "category_id",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
