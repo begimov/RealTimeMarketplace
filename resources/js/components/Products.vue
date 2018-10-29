@@ -74,6 +74,7 @@
             },
             save() {
                 axios.post('webapi/products', {...this.form}).then(res => {
+                    this.products = [...this.products, res.data.data]
                     this.add()
                 }).catch(err => {
                     console.log(err.response.data)
