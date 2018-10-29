@@ -52,7 +52,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn btn-success">Сохранить</button>
+                        <button type="submit" class="btn btn-success">Сохранить</button> <a href="#" class="btn btn-dark" @click.prevent="cancel">Отменить</a>
                     </div>
                 </div>
             </form>
@@ -106,6 +106,9 @@
                 }).catch(err => {
                     console.log(err.response.data)
                 })
+            },
+            cancel() {
+                this.add()
             }
         },
         mounted() {

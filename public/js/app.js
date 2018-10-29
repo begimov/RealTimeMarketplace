@@ -47458,6 +47458,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }).catch(function (err) {
                 console.log(err.response.data);
             });
+        },
+        cancel: function cancel() {
+            this.add();
         }
     },
     mounted: function mounted() {
@@ -47691,7 +47694,33 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Сохранить")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-dark",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.cancel($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Отменить")]
+                  )
+                ])
+              ])
             ]
           )
     ])
@@ -47709,20 +47738,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Категория")]),
         _vm._v(" "),
         _c("th", [_vm._v("Цена")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Сохранить")]
-        )
       ])
     ])
   }
