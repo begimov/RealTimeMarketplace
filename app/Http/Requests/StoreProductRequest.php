@@ -26,6 +26,15 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'category_id' => 'required|numeric|exists:categories,id',
+            'price' => 'sometimes|numeric',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Введите имя...',
+            'category_id.required' => 'Выберите категорию...',
         ];
     }
 }

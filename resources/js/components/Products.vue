@@ -36,6 +36,7 @@
                         <div class="form-group">
                             <label for="name">Название</label>
                             <input id="name" v-model="form.name" type="text" class="form-control" placeholder="Введите название...">
+                            <span class="help-block alert-danger p-1" v-if="errors.name">{{ errors.name[0] }}</span>
                         </div>
                     </div>
                     <div class="col">
@@ -45,6 +46,7 @@
                                 <option>Выберите категорию</option>
                                 <option :value="category.id" v-for="category in options.categories" :key="category.id">{{ category.name }}</option>
                             </select>
+                            <span class="help-block alert-danger p-1" v-if="errors.category_id">{{ errors.category_id[0] }}</span>
                         </div>
                     </div>
                 </div>
@@ -70,7 +72,8 @@
                 },
                 options: {
                     categories: []
-                }
+                },
+                errors: {}
             }
         },
         methods: {
@@ -84,17 +87,18 @@
                 this.newProduct = !this.newProduct
             },
             save() {
+                this.errors = {}
                 axios.post('webapi/products', {...this.form}).then(res => {
                     this.products = [...this.products, res.data.data]
                     this.add()
                 }).catch(err => {
-                    console.log(err.response.data)
+                    this.errors = {...err.response.data.errors}
                 })
                 
             },
             publish(id) {
                 const product = _.find(this.products, ['id', id])
-                
+
                 product.category_id = product.category.id
 
                 axios.patch(`webapi/products/${id}`, {...product}).then(res => {

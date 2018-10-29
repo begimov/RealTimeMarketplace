@@ -47406,6 +47406,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47418,7 +47420,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             },
             options: {
                 categories: []
-            }
+            },
+            errors: {}
         };
     },
 
@@ -47437,11 +47440,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         save: function save() {
             var _this2 = this;
 
+            this.errors = {};
             axios.post('webapi/products', _extends({}, this.form)).then(function (res) {
                 _this2.products = [].concat(_toConsumableArray(_this2.products), [res.data.data]);
                 _this2.add();
             }).catch(function (err) {
-                console.log(err.response.data);
+                _this2.errors = _extends({}, err.response.data.errors);
             });
         },
         publish: function publish(id) {
@@ -47608,7 +47612,15 @@ var render = function() {
                           _vm.$set(_vm.form, "name", $event.target.value)
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.name
+                      ? _c(
+                          "span",
+                          { staticClass: "help-block alert-danger p-1" },
+                          [_vm._v(_vm._s(_vm.errors.name[0]))]
+                        )
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -47666,7 +47678,15 @@ var render = function() {
                         })
                       ],
                       2
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.category_id
+                      ? _c(
+                          "span",
+                          { staticClass: "help-block alert-danger p-1" },
+                          [_vm._v(_vm._s(_vm.errors.category_id[0]))]
+                        )
+                      : _vm._e()
                   ])
                 ])
               ]),
