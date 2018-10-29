@@ -47859,8 +47859,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            options: {
+                order: [{ id: 1, name: 'По цене', param: 'price' }, { id: 2, name: 'По имени', param: 'name' }]
+            },
+            params: {
+                order: 0
+            }
+        };
+    },
+
     props: {
         category: {
             required: true,
@@ -47884,7 +47900,57 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.params.order,
+                expression: "params.order"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.params,
+                  "order",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "0", disabled: "" } }, [
+              _vm._v("Сортировка")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.options.order, function(order) {
+              return _c(
+                "option",
+                { key: order.id, domProps: { value: order.param } },
+                [_vm._v(_vm._s(order.name))]
+              )
+            })
+          ],
+          2
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -47924,15 +47990,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Поиск..." }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [_vm._v("filter")])
+    return _c("div", { staticClass: "col-sm-8" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Поиск..." }
+      })
     ])
   }
 ]
