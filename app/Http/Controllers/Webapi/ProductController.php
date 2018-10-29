@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = ProductResource::collection(Product::all());
+        $products = ProductResource::collection(Product::with('category')->get());
 
         $categories = CategoryResource::collection(Category::all());
 
