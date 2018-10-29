@@ -33,7 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @foreach ($categories as $category)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('categories.index', ['id' => $category->id]) }}">{{ $category->name }}</a>
+                            </li>    
+                        @endforeach
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->

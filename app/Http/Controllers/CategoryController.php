@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        dd(1);
     }
 
 }

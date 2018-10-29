@@ -24,3 +24,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'webapi', 'namespace' => 'Weba
     Route::resource('products', 'ProductController');
 
 });
+
+Route::get('/categories/{id}', 'CategoryController@show')->name('categories.index');
