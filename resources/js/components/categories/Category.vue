@@ -7,18 +7,18 @@
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="Поиск...">
+                <input type="text" class="form-control" placeholder="Поиск..." @keyup.enter="search" v-model="params.search">
             </div>
             <div class="col-sm-4">
-                <select v-model="params.order" class="form-control" @change.prevent="orderBy">
+                <select v-model="params.order" class="form-control" @change.prevent="sort">
                     <option value="0" disabled>Сортировка</option>
                     <option v-for="order in options.order" :key="order.id" :value="order.param">{{ order.name }}</option>
                 </select>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-6 mt-3" v-for="product in category.products" :key="product.id">
-                <div class="card">
+            <div class="col-md-4 col-sm-6 mt-3" v-for="product in products" :key="product.id">
+                <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <h4><span class="badge badge-success">{{ product.price }} руб.</span></h4>
@@ -41,18 +41,25 @@ export default {
                 ]
             },
             params: {
+                search: '',
                 order: ''
-            }
+            },
+            products: this.category.products
         }
     },
     methods: {
-        orderBy() {
-            axios.get('/categories', {
+        search() {
+            axios.get('/webapi/catalog/products', {
                 params: {
                     category_id: this.category.id,
-                    order: this.params.order
+                    search: this.params.search
                 }
+            }).then(res => {
+                this.products = res.data.data
             })
+        },
+        sort() {
+            console.log(this.params.order)
         }
     },
     props: {

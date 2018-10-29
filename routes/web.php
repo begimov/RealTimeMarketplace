@@ -25,4 +25,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'webapi', 'namespace' => 'Weba
 
 });
 
+Route::group(['prefix' => 'webapi/catalog', 'namespace' => 'Webapi'], function () {
+
+    Route::get('products', 'Catalog\ProductController@index');
+
+});
+
 Route::get('/categories/{category}', 'CategoryController@show')->name('categories.index');

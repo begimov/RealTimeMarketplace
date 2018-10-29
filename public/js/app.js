@@ -47872,19 +47872,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 order: [{ id: 1, name: 'По цене', param: 'price' }, { id: 2, name: 'По имени', param: 'name' }]
             },
             params: {
+                search: '',
                 order: ''
-            }
+            },
+            products: this.category.products
         };
     },
 
     methods: {
-        orderBy: function orderBy() {
-            axios.get('/categories', {
+        search: function search() {
+            var _this = this;
+
+            axios.get('/webapi/catalog/products', {
                 params: {
                     category_id: this.category.id,
-                    order: this.params.order
+                    search: this.params.search
                 }
+            }).then(function (res) {
+                _this.products = res.data.data;
             });
+        },
+        sort: function sort() {
+            console.log(this.params.order);
         }
     },
     props: {
@@ -47911,7 +47920,38 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.params.search,
+              expression: "params.search"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Поиск..." },
+          domProps: { value: _vm.params.search },
+          on: {
+            keyup: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.search($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.params, "search", $event.target.value)
+            }
+          }
+        })
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-4" }, [
         _c(
@@ -47945,7 +47985,7 @@ var render = function() {
                 },
                 function($event) {
                   $event.preventDefault()
-                  return _vm.orderBy($event)
+                  return _vm.sort($event)
                 }
               ]
             }
@@ -47971,12 +48011,12 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.category.products, function(product) {
+      _vm._l(_vm.products, function(product) {
         return _c(
           "div",
           { key: product.id, staticClass: "col-md-4 col-sm-6 mt-3" },
           [
-            _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card h-100" }, [
               _c("div", { staticClass: "card-body" }, [
                 _c("h5", { staticClass: "card-title" }, [
                   _vm._v(_vm._s(product.name))
@@ -48001,19 +48041,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-8" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Поиск..." }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
