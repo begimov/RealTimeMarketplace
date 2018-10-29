@@ -22,9 +22,9 @@
                         <td>
                             <form class="form-inline" action="" @submit.prevent="publish">
                                 <div class="form-group">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" v-model="product.price">
                                 </div>
-                                <button type="submit" class="btn btn-success">+</button>
+                                <button type="submit" class="btn btn-success ml-1">></button>
                             </form>
                         </td>
                     </tr>

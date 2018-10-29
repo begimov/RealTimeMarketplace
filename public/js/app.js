@@ -47514,15 +47514,37 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._m(1, true),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: product.price,
+                                expression: "product.price"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: product.price },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(product, "price", $event.target.value)
+                              }
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-success",
+                            staticClass: "btn btn-success ml-1",
                             attrs: { type: "submit" }
                           },
-                          [_vm._v("+")]
+                          [_vm._v(">")]
                         )
                       ]
                     )
@@ -47638,7 +47660,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _vm._m(1)
             ]
           )
     ])
@@ -47657,14 +47679,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Цена")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
     ])
   },
   function() {
