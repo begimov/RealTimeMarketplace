@@ -47893,7 +47893,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         sort: function sort() {
-            console.log(this.params.order);
+            this.products = this.params.order == 'price' ? _.sortBy(this.products, function (o) {
+                return parseFloat(o.price);
+            }) : _.sortBy(this.products, [this.params.order]);
         }
     },
     props: {

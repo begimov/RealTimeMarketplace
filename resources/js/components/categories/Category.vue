@@ -59,7 +59,10 @@ export default {
             })
         },
         sort() {
-            console.log(this.params.order)
+            this.products = (this.params.order == 'price') ? _.sortBy(this.products, function(o) {
+                return parseFloat(o.price)
+            }) : _.sortBy(this.products, [this.params.order])
+            
         }
     },
     props: {
