@@ -35,6 +35,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name.required' => 'Введите имя...',
             'category_id.required' => 'Выберите категорию...',
+            'price.numeric' => 'Цена должна быть числом',
         ];
     }
 }

@@ -47459,15 +47459,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var _this3 = this;
 
             this.isLoading = true;
-
+            this.errors = {};
             var product = _.find(this.products, ['id', id]);
-
             product.category_id = product.category.id;
 
             axios.patch('webapi/products/' + id, _extends({}, product)).then(function (res) {
                 _this3.isLoading = false;
             }).catch(function (err) {
-                console.log(err.response.data);
+                _this3.errors = _extends({}, err.response.data.errors);
                 _this3.isLoading = false;
             });
         },
@@ -47521,7 +47520,24 @@ var render = function() {
     _c("div", { staticClass: "card-body p-0" }, [
       !_vm.newProduct
         ? _c("table", { staticClass: "table table-bordered m-0" }, [
-            _vm._m(0),
+            _c("thead", { staticClass: "bg-primary text-white" }, [
+              _c("tr", [
+                _c("th", [_vm._v("Название")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Категория")]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v("Цена "),
+                  _vm.errors.price
+                    ? _c(
+                        "span",
+                        { staticClass: "help-block alert-danger p-1" },
+                        [_vm._v(_vm._s(_vm.errors.price[0]))]
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -47742,22 +47758,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Название")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Категория")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Цена")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

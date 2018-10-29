@@ -13,7 +13,7 @@
                     <tr>
                         <th>Название</th>
                         <th>Категория</th>
-                        <th>Цена</th>
+                        <th>Цена <span class="help-block alert-danger p-1" v-if="errors.price">{{ errors.price[0] }}</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,15 +105,14 @@
             },
             publish(id) {
                 this.isLoading = true
-
+                this.errors = {}
                 const product = _.find(this.products, ['id', id])
-
                 product.category_id = product.category.id
 
                 axios.patch(`webapi/products/${id}`, {...product}).then(res => {
                     this.isLoading = false
                 }).catch(err => {
-                    console.log(err.response.data)
+                    this.errors = {...err.response.data.errors}
                     this.isLoading = false
                 })
             },
