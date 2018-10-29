@@ -47388,6 +47388,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47395,12 +47398,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             products: [],
             newProduct: false,
             form: {
-                name: ''
+                name: '',
+                category: null
+            },
+            options: {
+                categories: []
             }
         };
     },
 
     methods: {
+        getInitialData: function getInitialData() {
+            var _this = this;
+
+            axios.get('webapi/products').then(function (res) {
+                _this.products = res.data.products;
+                _this.options.categories = res.data.categories;
+            });
+        },
         add: function add() {
             this.newProduct = !this.newProduct;
         },
@@ -47409,11 +47424,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        var _this = this;
-
-        axios.get('webapi/products').then(function (res) {
-            _this.products = res.data.products;
-        });
+        this.getInitialData();
     }
 });
 
@@ -47513,10 +47524,66 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _c("div", { staticClass: "col" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "category" } }, [
+                      _vm._v("Категория")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.category,
+                            expression: "form.category"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "category" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "category",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", [_vm._v("Выберите категорию")]),
+                        _vm._v(" "),
+                        _vm._l(_vm.options.categories, function(category) {
+                          return _c(
+                            "option",
+                            {
+                              key: category.id,
+                              domProps: { value: category.id }
+                            },
+                            [_vm._v(_vm._s(category.name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _vm._m(1)
             ]
           )
     ])
@@ -47529,17 +47596,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
       _c("tr", [_c("th", { attrs: { scope: "col" } }, [_vm._v("Название")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "category" } }, [_vm._v("Категория")]),
-        _vm._v("\n                        //\n                    ")
-      ])
     ])
   },
   function() {

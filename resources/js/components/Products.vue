@@ -30,7 +30,10 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="category">Категория</label>
-                            //
+                            <select id="category" v-model="form.category" class="form-control">
+                                <option>Выберите категорию</option>
+                                <option :value="category.id" v-for="category in options.categories" :key="category.id">{{ category.name }}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -51,11 +54,21 @@
                 products: [],
                 newProduct: false,
                 form: {
-                    name: ''
+                    name: '',
+                    category: null
+                },
+                options: {
+                    categories: []
                 }
             }
         },
         methods: {
+            getInitialData() {
+                axios.get('webapi/products').then(res => {
+                    this.products = res.data.products
+                    this.options.categories = res.data.categories
+                })
+            },
             add() {
                 this.newProduct = !this.newProduct
             },
@@ -64,9 +77,7 @@
             }
         },
         mounted() {
-            axios.get('webapi/products').then(res => {
-                this.products = res.data.products
-            })
+            this.getInitialData()
         }
     }
 </script>
