@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         @foreach ($category->products as $product)
-            <div class="col-sm-4 mt-3">
+            <div class="col-md-4 col-sm-6 mt-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
