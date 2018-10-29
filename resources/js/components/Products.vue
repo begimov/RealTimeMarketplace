@@ -10,12 +10,23 @@
             <table class="table table-bordered m-0" v-if="!newProduct">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Название</th>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Цена</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="product in products" :key="product.id">
                         <td>{{ product.name }}</td>
+                        <td>{{ product.category.name }}</td>
+                        <td>
+                            <form class="form-inline" action="" @submit.prevent="publish">
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success">+</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -80,6 +91,9 @@
                     console.log(err.response.data)
                 })
                 
+            },
+            publish() {
+                console.log('OK')
             }
         },
         mounted() {

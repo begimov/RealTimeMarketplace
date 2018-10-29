@@ -47395,6 +47395,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47432,6 +47443,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             }).catch(function (err) {
                 console.log(err.response.data);
             });
+        },
+        publish: function publish() {
+            console.log('OK');
         }
     },
     mounted: function mounted() {
@@ -47482,7 +47496,37 @@ var render = function() {
               "tbody",
               _vm._l(_vm.products, function(product) {
                 return _c("tr", { key: product.id }, [
-                  _c("td", [_vm._v(_vm._s(product.name))])
+                  _c("td", [_vm._v(_vm._s(product.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.category.name))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "form",
+                      {
+                        staticClass: "form-inline",
+                        attrs: { action: "" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.publish($event)
+                          }
+                        }
+                      },
+                      [
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("+")]
+                        )
+                      ]
+                    )
+                  ])
                 ])
               })
             )
@@ -47594,7 +47638,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _vm._m(2)
             ]
           )
     ])
@@ -47606,7 +47650,21 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("tr", [_c("th", { attrs: { scope: "col" } }, [_vm._v("Название")])])
+      _c("tr", [
+        _c("th", [_vm._v("Название")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Категория")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Цена")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
     ])
   },
   function() {
