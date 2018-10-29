@@ -65,7 +65,7 @@
         },
         mounted() {
             axios.get('webapi/products').then(res => {
-                this.products = res.data.data
+                this.products = res.data.products
             })
         }
     }

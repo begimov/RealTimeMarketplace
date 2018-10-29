@@ -47412,7 +47412,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         axios.get('webapi/products').then(function (res) {
-            _this.products = res.data.data;
+            _this.products = res.data.products;
         });
     }
 });
