@@ -10,7 +10,7 @@
                 <input type="text" class="form-control" placeholder="Поиск...">
             </div>
             <div class="col-sm-4">
-                <select v-model="params.order" class="form-control">
+                <select v-model="params.order" class="form-control" @change.prevent="orderBy">
                     <option value="0" disabled>Сортировка</option>
                     <option v-for="order in options.order" :key="order.id" :value="order.param">{{ order.name }}</option>
                 </select>
@@ -41,8 +41,18 @@ export default {
                 ]
             },
             params: {
-                order: 0
+                order: ''
             }
+        }
+    },
+    methods: {
+        orderBy() {
+            axios.get('/categories', {
+                params: {
+                    category_id: this.category.id,
+                    order: this.params.order
+                }
+            })
         }
     },
     props: {

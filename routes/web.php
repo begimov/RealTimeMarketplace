@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'webapi', 'namespace' => 'Webapi'], function () {
 
-    Route::resource('products', 'ProductController');
+    Route::resource('products', 'Admin\ProductController');
 
 });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Webapi;
+namespace App\Http\Controllers\Webapi\Admin;
 
 use App\Models\Product;
 use App\Models\Category;

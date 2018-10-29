@@ -109,7 +109,7 @@
                 const product = _.find(this.products, ['id', id])
                 product.category_id = product.category.id
 
-                axios.patch(`webapi/products/${id}`, {...product}).then(res => {
+                axios.patch(`/webapi/products/${id}`, {...product}).then(res => {
                     this.isLoading = false
                 }).catch(err => {
                     this.errors = {...err.response.data.errors}

@@ -47464,7 +47464,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var product = _.find(this.products, ['id', id]);
             product.category_id = product.category.id;
 
-            axios.patch('webapi/products/' + id, _extends({}, product)).then(function (res) {
+            axios.patch('/webapi/products/' + id, _extends({}, product)).then(function (res) {
                 _this3.isLoading = false;
             }).catch(function (err) {
                 _this3.errors = _extends({}, err.response.data.errors);
@@ -47872,11 +47872,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 order: [{ id: 1, name: 'По цене', param: 'price' }, { id: 2, name: 'По имени', param: 'name' }]
             },
             params: {
-                order: 0
+                order: ''
             }
         };
     },
 
+    methods: {
+        orderBy: function orderBy() {
+            axios.get('/categories', {
+                params: {
+                    category_id: this.category.id,
+                    order: this.params.order
+                }
+            });
+        }
+    },
     props: {
         category: {
             required: true,
@@ -47917,21 +47927,27 @@ var render = function() {
             ],
             staticClass: "form-control",
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.params,
-                  "order",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.params,
+                    "order",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                },
+                function($event) {
+                  $event.preventDefault()
+                  return _vm.orderBy($event)
+                }
+              ]
             }
           },
           [
