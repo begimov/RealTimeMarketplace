@@ -73,7 +73,13 @@
                 this.newProduct = !this.newProduct
             },
             save() {
-                this.add()
+                axios.post('webapi/products').then(res => {
+                    console.log(res)
+                    this.add()
+                }).catch(err => {
+                    console.log(err.response.data)
+                })
+                
             }
         },
         mounted() {

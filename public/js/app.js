@@ -47420,7 +47420,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newProduct = !this.newProduct;
         },
         save: function save() {
-            this.add();
+            var _this2 = this;
+
+            axios.post('webapi/products').then(function (res) {
+                console.log(res);
+                _this2.add();
+            }).catch(function (err) {
+                console.log(err.response.data);
+            });
         }
     },
     mounted: function mounted() {
