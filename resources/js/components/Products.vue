@@ -1,5 +1,6 @@
 <template>
     <div class="card">
+        <div v-bind:class="{ 'isActive': isLoading, 'loader': true, 'loader-def': true }"></div>
         <div class="card-header bg-dark text-white">
             <div class="row">
                 <div class="col">Товары</div>
@@ -73,38 +74,47 @@
                 options: {
                     categories: []
                 },
-                errors: {}
+                errors: {},
+                isLoading: false
             }
         },
         methods: {
             getInitialData() {
+                this.isLoading = true
                 axios.get('webapi/products').then(res => {
                     this.products = res.data.products
                     this.options.categories = res.data.categories
+                    this.isLoading = false
                 })
             },
             add() {
                 this.newProduct = !this.newProduct
             },
             save() {
+                this.isLoading = true
                 this.errors = {}
                 axios.post('webapi/products', {...this.form}).then(res => {
                     this.products = [...this.products, res.data.data]
                     this.add()
+                    this.isLoading = false
                 }).catch(err => {
                     this.errors = {...err.response.data.errors}
+                    this.isLoading = false
                 })
                 
             },
             publish(id) {
+                this.isLoading = true
+
                 const product = _.find(this.products, ['id', id])
 
                 product.category_id = product.category.id
 
                 axios.patch(`webapi/products/${id}`, {...product}).then(res => {
-                    //
+                    this.isLoading = false
                 }).catch(err => {
                     console.log(err.response.data)
+                    this.isLoading = false
                 })
             },
             cancel() {

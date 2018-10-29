@@ -47408,6 +47408,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47421,7 +47422,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             options: {
                 categories: []
             },
-            errors: {}
+            errors: {},
+            isLoading: false
         };
     },
 
@@ -47429,9 +47431,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         getInitialData: function getInitialData() {
             var _this = this;
 
+            this.isLoading = true;
             axios.get('webapi/products').then(function (res) {
                 _this.products = res.data.products;
                 _this.options.categories = res.data.categories;
+                _this.isLoading = false;
             });
         },
         add: function add() {
@@ -47440,23 +47444,31 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         save: function save() {
             var _this2 = this;
 
+            this.isLoading = true;
             this.errors = {};
             axios.post('webapi/products', _extends({}, this.form)).then(function (res) {
                 _this2.products = [].concat(_toConsumableArray(_this2.products), [res.data.data]);
                 _this2.add();
+                _this2.isLoading = false;
             }).catch(function (err) {
                 _this2.errors = _extends({}, err.response.data.errors);
+                _this2.isLoading = false;
             });
         },
         publish: function publish(id) {
+            var _this3 = this;
+
+            this.isLoading = true;
+
             var product = _.find(this.products, ['id', id]);
 
             product.category_id = product.category.id;
 
             axios.patch('webapi/products/' + id, _extends({}, product)).then(function (res) {
-                //
+                _this3.isLoading = false;
             }).catch(function (err) {
                 console.log(err.response.data);
+                _this3.isLoading = false;
             });
         },
         cancel: function cancel() {
@@ -47477,6 +47489,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
+    _c("div", {
+      class: { isActive: _vm.isLoading, loader: true, "loader-def": true }
+    }),
+    _vm._v(" "),
     _c("div", { staticClass: "card-header bg-dark text-white" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col" }, [_vm._v("Товары")]),
