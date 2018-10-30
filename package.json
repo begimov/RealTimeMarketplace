@@ -20,6 +20,8 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "laravel-echo": "^1.4.0",
+        "pusher-js": "^4.3.1",
         "vue2-dropzone": "^3.5.2"
     }
 }
