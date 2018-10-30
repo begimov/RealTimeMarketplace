@@ -48429,6 +48429,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(57);
 //
 //
 //
@@ -48461,6 +48462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -48501,6 +48503,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: Object
         }
     }
+});
+__WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$on('user-joined', function (user) {
+    console.log(user);
 });
 
 /***/ }),
@@ -58489,18 +58494,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 56 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(57);
+
 
 Echo.join('market').here(function (users) {
-    console.log(users);
+    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('users', users);
 }).joining(function (user) {
-    console.log(user);
+    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('user-joined', user);
 }).leaving(function (user) {
-    console.log(user);
+    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('user-left', user);
 });
 // .listen('OrderShipped', (e) => {
 //     console.log(e.order.name);
 // });
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bus; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+var Bus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 
 /***/ })
 /******/ ]);

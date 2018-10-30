@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { Bus } from './../../bus'
 export default {
     data() {
         return {
@@ -72,5 +73,8 @@ export default {
         }
     }
 }
+Bus.$on('user-joined', user => {
+  console.log(user)
+});
 </script>
 
