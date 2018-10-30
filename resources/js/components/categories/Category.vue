@@ -84,6 +84,9 @@ export default {
         },
         notify(data) {
             this.offer = _.find(this.products,['id', data.productId])
+            setInterval(function () {
+                this.offer = null
+            }.bind(this), 60000); 
         },
         sell(productId) {
             axios.post('/webapi/catalog/products/sell', {
