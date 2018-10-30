@@ -1,5 +1,14 @@
 <template>
     <div class="container my-4">
+        <div class="row" v-if="offer">
+            <div class="col">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Предложение о покупке!</h4>
+                    <p>Товар "{{ offer.name }}" за {{ offer.price }} руб.</p>
+                    <p class="mb-0"><a href="" class="btn btn-success" @click.prevent="sell(offer.id)">Продать</a></p>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <h1>{{ category.name }}</h1>
@@ -45,7 +54,8 @@ export default {
                 search: '',
                 order: ''
             },
-            products: this.category.products
+            products: this.category.products,
+            offer: null
         }
     },
     methods: {
@@ -70,9 +80,17 @@ export default {
                 params: {
                     productId
                 }
-            }).then(res => {
-                //
-            }) 
+            })
+        },
+        notify(data) {
+            this.offer = _.find(this.products,['id', data.productId])
+        },
+        sell(productId) {
+            axios.post('/webapi/catalog/products/sell', {
+                params: {
+                    productId
+                }
+            })
         }
     },
     props: {
@@ -82,8 +100,8 @@ export default {
         }
     },
     mounted() {
-        Bus.$on('users', users => {
-            console.log(users)
+        Bus.$on('PurchaseRequested', payload => {
+            this.notify(payload)
         });
     }
 }

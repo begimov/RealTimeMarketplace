@@ -31,11 +31,11 @@ class PurchaseRequested implements ShouldBroadcast
     {
         $product = Product::find($productId = $this->payload['productId']);
 
-        $recievingUserId = $product->user->id;
+        $ownerId = $product->user->id;
 
         return [
             'buyerId' => $this->payload['userId'],
-            'ownerId' => $recievingUserId,
+            'ownerId' => $ownerId,
             'productId' => $productId
         ];
     }

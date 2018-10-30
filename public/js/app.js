@@ -48462,6 +48462,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48474,7 +48483,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 search: '',
                 order: ''
             },
-            products: this.category.products
+            products: this.category.products,
+            offer: null
         };
     },
 
@@ -48501,8 +48511,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 params: {
                     productId: productId
                 }
-            }).then(function (res) {
-                //
+            });
+        },
+        notify: function notify(data) {
+            this.offer = _.find(this.products, ['id', data.productId]);
+        },
+        sell: function sell(productId) {
+            axios.post('/webapi/catalog/products/sell', {
+                params: {
+                    productId: productId
+                }
             });
         }
     },
@@ -48513,8 +48531,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$on('users', function (users) {
-            console.log(users);
+        var _this2 = this;
+
+        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$on('PurchaseRequested', function (payload) {
+            _this2.notify(payload);
         });
     }
 });
@@ -48528,6 +48548,49 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container my-4" }, [
+    _vm.offer
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _c(
+              "div",
+              { staticClass: "alert alert-success", attrs: { role: "alert" } },
+              [
+                _c("h4", { staticClass: "alert-heading" }, [
+                  _vm._v("Предложение о покупке!")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    'Товар "' +
+                      _vm._s(_vm.offer.name) +
+                      '" за ' +
+                      _vm._s(_vm.offer.price) +
+                      " руб."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "mb-0" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { href: "" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.sell(_vm.offer.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Продать")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col" }, [
         _c("h1", [_vm._v(_vm._s(_vm.category.name))])
@@ -58521,10 +58584,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(57);
 
 
-Echo.join('market').here(function (users) {
-    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('users', users);
-}).listen('PurchaseRequested', function (e) {
-    console.log(e);
+Echo.join('market').listen('PurchaseRequested', function (e) {
+    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('PurchaseRequested', e);
 });
 
 /***/ }),
