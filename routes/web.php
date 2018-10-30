@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'webapi', 'namespace' => 'Weba
 
     Route::resource('files', 'Admin\FileController');
 
+    Route::resource('accounts', 'Admin\AccountController');
+
 });
 
 Route::group(['prefix' => 'webapi/catalog', 'namespace' => 'Webapi'], function () {

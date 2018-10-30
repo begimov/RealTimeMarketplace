@@ -57284,7 +57284,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
                 }
             },
-            account: {}
+            account: {},
+            replenishAmount: 0
         };
     },
 
@@ -57293,7 +57294,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var _this = this;
 
             this.isLoading = true;
-            axios.get('webapi/products').then(function (res) {
+            axios.get('/webapi/products').then(function (res) {
                 _this.products = res.data.products;
                 _this.options.categories = res.data.categories;
                 _this.account = res.data.account;
@@ -57308,7 +57309,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             this.isLoading = true;
             this.errors = {};
-            axios.post('webapi/products', _extends({}, this.form)).then(function (res) {
+            axios.post('/webapi/products', _extends({}, this.form)).then(function (res) {
                 _this2.products = [].concat(_toConsumableArray(_this2.products), [res.data.data]);
                 _this2.add();
                 _this2.isLoading = false;
@@ -57339,8 +57340,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.form.image_id = response;
         },
         replenish: function replenish() {
-            axios.patch('webapi/accounts', _extends({}, this.form)).then(function (res) {
-                //
+            axios.patch('/webapi/accounts/' + this.account.id, { amount: this.replenishAmount }).then(function (res) {
+                console.log(res);
             });
         }
     },
@@ -58251,7 +58252,29 @@ var render = function() {
           }
         },
         [
-          _vm._m(0),
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.replenishAmount,
+                  expression: "replenishAmount"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Пополнить..." },
+              domProps: { value: _vm.replenishAmount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.replenishAmount = $event.target.value
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "button",
@@ -58263,19 +58286,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Пополнить..." }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

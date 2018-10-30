@@ -72,7 +72,7 @@
             <h5>Счет: {{ account.amount }}</h5>
             <form class="form-inline" action="" @submit.prevent="replenish">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Пополнить...">
+                    <input type="text" class="form-control" placeholder="Пополнить..." v-model="replenishAmount">
                 </div>
                  <button type="submit" class="btn btn-dark ml-1">></button>
             </form>
@@ -115,13 +115,14 @@
                         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
                     }
                 },
-                account: {}
+                account: {},
+                replenishAmount: 0
             }
         },
         methods: {
             getInitialData() {
                 this.isLoading = true
-                axios.get('webapi/products').then(res => {
+                axios.get('/webapi/products').then(res => {
                     this.products = res.data.products
                     this.options.categories = res.data.categories
                     this.account = res.data.account
@@ -134,7 +135,7 @@
             save() {
                 this.isLoading = true
                 this.errors = {}
-                axios.post('webapi/products', {...this.form}).then(res => {
+                axios.post('/webapi/products', {...this.form}).then(res => {
                     this.products = [...this.products, res.data.data]
                     this.add()
                     this.isLoading = false
@@ -164,8 +165,8 @@
                 this.form.image_id = response
             },
             replenish() {
-                axios.patch('webapi/accounts', {...this.form}).then(res => {
-                    //
+                axios.patch(`/webapi/accounts/${this.account.id}`, {amount: this.replenishAmount}).then(res => {
+                    console.log(res)
                 })
             }
         },
