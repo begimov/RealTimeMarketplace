@@ -12,8 +12,7 @@
 */
 
 Broadcast::channel('market', function ($user) {
-    return [
-        'id' => $user->id,
-        'name' => $user->name
-    ];
+    if (true) {
+        return ['id' => $user->id, 'name' => $user->name];
+    }
 });

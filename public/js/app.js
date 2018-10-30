@@ -13977,6 +13977,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   encrypted: true
 });
 
+__webpack_require__(56);
+
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -58484,6 +58486,21 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+Echo.join('market').here(function (users) {
+    console.log(users);
+}).joining(function (user) {
+    console.log(user);
+}).leaving(function (user) {
+    console.log(user);
+});
+// .listen('OrderShipped', (e) => {
+//     console.log(e.order.name);
+// });
 
 /***/ })
 /******/ ]);
