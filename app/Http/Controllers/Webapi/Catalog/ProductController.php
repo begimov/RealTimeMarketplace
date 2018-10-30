@@ -26,10 +26,8 @@ class ProductController extends Controller
         broadcast(new PurchaseRequested(
             array_merge(
                 $request->all()['params'], 
-                ['user_id' => $request->user()->id]
+                ['userId' => $request->user()->id]
             )
         ))->toOthers();
-
-        dd($request->all());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Product;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -24,6 +25,19 @@ class PurchaseRequested implements ShouldBroadcast
     public function __construct(array $data)
     {
         $this->payload = $data;
+    }
+
+    public function broadcastWith()
+    {
+        $product = Product::find($productId = $this->payload['productId']);
+
+        $recievingUserId = $product->user->id;
+
+        return [
+            'buyerId' => $this->payload['userId'],
+            'ownerId' => $recievingUserId,
+            'productId' => $productId
+        ];
     }
 
     /**
