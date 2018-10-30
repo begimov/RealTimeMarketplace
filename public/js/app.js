@@ -57240,6 +57240,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -57274,7 +57283,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
                 }
-            }
+            },
+            account: {}
         };
     },
 
@@ -57286,6 +57296,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             axios.get('webapi/products').then(function (res) {
                 _this.products = res.data.products;
                 _this.options.categories = res.data.categories;
+                _this.account = res.data.account;
                 _this.isLoading = false;
             });
         },
@@ -57326,6 +57337,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         },
         fileUploaded: function fileUploaded(file, response) {
             this.form.image_id = response;
+        },
+        replenish: function replenish() {
+            axios.patch('webapi/accounts', _extends({}, this.form)).then(function (res) {
+                //
+            });
         }
     },
     mounted: function mounted() {
@@ -58217,10 +58233,49 @@ var render = function() {
               ])
             ]
           )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-footer" }, [
+      _c("h5", [_vm._v("Счет: " + _vm._s(_vm.account.amount))]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          staticClass: "form-inline",
+          attrs: { action: "" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.replenish($event)
+            }
+          }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-dark ml-1", attrs: { type: "submit" } },
+            [_vm._v(">")]
+          )
+        ]
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Пополнить..." }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

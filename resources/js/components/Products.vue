@@ -68,6 +68,15 @@
                 </div>
             </form>
         </div>
+        <div class="card-footer">
+            <h5>Счет: {{ account.amount }}</h5>
+            <form class="form-inline" action="" @submit.prevent="replenish">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Пополнить...">
+                </div>
+                 <button type="submit" class="btn btn-dark ml-1">></button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -105,7 +114,8 @@
                     headers: {
                         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
                     }
-                }
+                },
+                account: {}
             }
         },
         methods: {
@@ -114,6 +124,7 @@
                 axios.get('webapi/products').then(res => {
                     this.products = res.data.products
                     this.options.categories = res.data.categories
+                    this.account = res.data.account
                     this.isLoading = false
                 })
             },
@@ -151,6 +162,11 @@
             },
             fileUploaded(file, response) {
                 this.form.image_id = response
+            },
+            replenish() {
+                axios.patch('webapi/accounts', {...this.form}).then(res => {
+                    //
+                })
             }
         },
         mounted() {

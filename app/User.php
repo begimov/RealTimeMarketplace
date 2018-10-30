@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Account;
 use App\Models\Product;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -32,5 +33,10 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function account()
+    {
+        return $this->hasOne(Account::class);
     }
 }

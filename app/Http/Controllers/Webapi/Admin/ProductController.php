@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AccountResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreProductRequest;
@@ -17,9 +18,11 @@ class ProductController extends Controller
     {
         $products = ProductResource::collection(auth()->user()->products()->with('category')->get());
 
+        $account = new AccountResource(auth()->user()->account);
+
         $categories = CategoryResource::collection(Category::all());
 
-        return compact('products', 'categories');
+        return compact('products', 'categories', 'account');
     }
 
     public function store(StoreProductRequest $request)
