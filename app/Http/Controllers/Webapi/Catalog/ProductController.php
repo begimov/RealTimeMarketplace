@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Webapi\Catalog;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Events\PurchaseRequested;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 
@@ -18,5 +19,17 @@ class ProductController extends Controller
             ->get();
 
         return ProductResource::collection($products);
+    }
+
+    public function purchase(Request $request)
+    {
+        broadcast(new PurchaseRequested(
+            array_merge(
+                $request->all()['params'], 
+                ['user_id' => $request->user()->id]
+            )
+        ))->toOthers();
+
+        dd($request->all());
     }
 }

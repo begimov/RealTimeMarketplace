@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'webapi', 'namespace' => 'Weba
 
 Route::group(['prefix' => 'webapi/catalog', 'namespace' => 'Webapi'], function () {
 
+    Route::post('products/purchase', 'Catalog\ProductController@purchase')->middleware(['auth']);
+
     Route::get('products', 'Catalog\ProductController@index');
 
 });

@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <h4><span class="badge badge-success">{{ product.price }} руб.</span></h4>
-                        <a href="" class="btn btn-primary">Купить</a>
+                        <a href="" class="btn btn-primary" @click.prevent="purchase(product.id)">Купить</a>
                     </div>
                 </div>
             </div>
@@ -64,6 +64,15 @@ export default {
                 return parseFloat(o.price)
             }) : _.sortBy(this.products, [this.params.order])
             
+        },
+        purchase(productId) {
+           axios.post('/webapi/catalog/products/purchase', {
+                params: {
+                    productId
+                }
+            }).then(res => {
+                //
+            }) 
         }
     },
     props: {
@@ -71,10 +80,13 @@ export default {
             required: true,
             type: Object
         }
+    },
+    mounted() {
+        Bus.$on('users', users => {
+            console.log(users)
+        });
     }
 }
-Bus.$on('user-joined', user => {
-  console.log(user)
-});
+
 </script>
 

@@ -48495,6 +48495,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.products = this.params.order == 'price' ? _.sortBy(this.products, function (o) {
                 return parseFloat(o.price);
             }) : _.sortBy(this.products, [this.params.order]);
+        },
+        purchase: function purchase(productId) {
+            axios.post('/webapi/catalog/products/purchase', {
+                params: {
+                    productId: productId
+                }
+            }).then(function (res) {
+                //
+            });
         }
     },
     props: {
@@ -48502,10 +48511,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true,
             type: Object
         }
+    },
+    mounted: function mounted() {
+        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$on('users', function (users) {
+            console.log(users);
+        });
     }
-});
-__WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$on('user-joined', function (user) {
-    console.log(user);
 });
 
 /***/ }),
@@ -48634,7 +48645,16 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "a",
-                  { staticClass: "btn btn-primary", attrs: { href: "" } },
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { href: "" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.purchase(product.id)
+                      }
+                    }
+                  },
                   [_vm._v("Купить")]
                 )
               ])
@@ -58503,14 +58523,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 Echo.join('market').here(function (users) {
     __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('users', users);
-}).joining(function (user) {
-    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('user-joined', user);
-}).leaving(function (user) {
-    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* Bus */].$emit('user-left', user);
+}).listen('PurchaseRequested', function (e) {
+    console.log(e);
 });
-// .listen('OrderShipped', (e) => {
-//     console.log(e.order.name);
-// });
 
 /***/ }),
 /* 57 */
