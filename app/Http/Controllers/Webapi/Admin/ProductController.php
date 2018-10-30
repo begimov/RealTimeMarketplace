@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = ProductResource::collection(Product::with('category')->get());
+        $products = ProductResource::collection(auth()->user()->products()->with('category')->get());
 
         $categories = CategoryResource::collection(Category::all());
 
@@ -24,7 +24,11 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $newProduct = Product::create($request->all());
+        $newProduct = Product::make($request->all());
+
+        $request->user()->products()->save($newProduct);
+
+        $newProduct->save();
 
         $newProduct->image()->save(Image::find($request->image_id));
 

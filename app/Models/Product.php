@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use App\Models\Image;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
@@ -24,5 +25,10 @@ class Product extends Model
     public function image()
     {
         return $this->hasOne(Image::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
