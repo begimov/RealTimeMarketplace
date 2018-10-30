@@ -57340,8 +57340,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.form.image_id = response;
         },
         replenish: function replenish() {
+            var _this4 = this;
+
             axios.patch('/webapi/accounts/' + this.account.id, { amount: this.replenishAmount }).then(function (res) {
-                console.log(res);
+                _this4.account.amount = parseFloat(res.data);
             });
         }
     },

@@ -166,7 +166,7 @@
             },
             replenish() {
                 axios.patch(`/webapi/accounts/${this.account.id}`, {amount: this.replenishAmount}).then(res => {
-                    console.log(res)
+                    this.account.amount = parseFloat(res.data)
                 })
             }
         },

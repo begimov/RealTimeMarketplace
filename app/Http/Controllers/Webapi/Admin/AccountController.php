@@ -10,6 +10,13 @@ class AccountController extends Controller
 {
     public function update(Request $request)
     {
-        dd($request->all());
+        $account = $request->user()->account;
+
+        $account->amount += $request->amount;
+
+        $account->save();
+
+        return $account->amount;
+
     }
 }
